@@ -1,35 +1,42 @@
 import './App.css';
+import React, {useState} from "react"
 import data from "./contacts.json"
+
+
+let listOfContacts = [];
+data.map((element) => {
+  if(listOfContacts.length < 5){
+    listOfContacts.push(element)
+  }
+})
 
 function App() {
 
-  let listOfContacts = [];
-  for(let i=1; i<=5; i++){
-    listOfContacts.push(data[i])
+
+const [actors, updateActors] = useState(listOfContacts)
+ 
+
+  const addContact = () => {
+    let randomIndex = Math.floor(Math.random() * data.length)
+    let elem = data[randomIndex]
+
+    updateActors([elem, ...actors])
   }
 
   return (
-   <table>
-     <thead>
-       <tr>
-         <th>Picture</th>
-         <th>Name</th>
-         <th>Popularity</th>
-       </tr>
-     </thead>
-     <tbody>
-       {listOfContacts.map(c => {
-         return (
-           <tr>
-             <td><img src={c.pictureUrl} style={{height: "10rem"}}></img></td>
-             <td><h3>{c.name}</h3></td>
-             <td><h4>{c.popularity}</h4></td>
-           </tr>
-         )
-       })}
-     </tbody>
-   </table>
-  );
+    <div >
+      <button onClick={addContact} style={{margin: "2rem"}}>Add Random Contact</button>
+      {
+        actors.map((element,index)=>{
+          return <ul key={index} style={{listStyleType: "none", margin: "5rem 5rem 5rem 20rem"}}>
+                    <li><img src={element.pictureUrl} style={{width: "5rem"}}/></li>
+                    <li>Name: {element.name}</li>
+                    <li>Popularity: {element.popularity}</li>
+                  </ul>
+        })
+      }
+  </div>
+  )
 }
 
 export default App;
