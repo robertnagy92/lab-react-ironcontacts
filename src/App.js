@@ -52,6 +52,14 @@ const [actors, updateActors] = useState(listOfContacts)
 
   }
 
+  const handleDelete = (id) => {
+    
+    let filteredContacts = actors.filter((element) => {
+      return actors.indexOf(element) !== id
+    })
+    updateActors(filteredContacts)
+  }
+
   return (
     <div >
       <button onClick={addContact}>Add Random Contact</button>
@@ -63,6 +71,7 @@ const [actors, updateActors] = useState(listOfContacts)
                     <li><img src={element.pictureUrl} style={{width: "5rem"}}/></li>
                     <li>Name: {element.name}</li>
                     <li>Popularity: {element.popularity}</li>
+                    <button onClick={() => handleDelete(index)}>Delete</button>
                   </ul>
         })
       }
